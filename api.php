@@ -62,28 +62,32 @@ class calculadora{
     public function division(){
         global $entrada;
         $datos = explode('/', $entrada);
+        $datos_sin_0 = array_shift($datos);
         $division = array_reduce($datos, function($acumulado, $valor){
-            return $acumulado%$valor;
-        }, 1);
+            return $acumulado/$valor;
+        }, $datos_sin_0);
         echo $division;
     }
     public function validacion(){
         global $entrada;
         $validacion;
-        if(strpos($entrada, "+") && strpos($entrada, "-")){
-            return $validacion = 1;
+        if(strpos($entrada, "+") && strpos($entrada, "-") && strpos($entrada, "*")){
+            return $validacion = 9;
         }
+        elseif(strpos($entrada, "+") && strpos($entrada, "-")){
+            return $validacion = 10;
+        } 
         elseif (strpos($entrada, "+")){
-            return $validacion = 3;
+            return $validacion = 11;
         } 
         elseif(strpos($entrada, "-")){
-            return $validacion = 2;
+            return $validacion = 12;
         } 
         elseif(strpos($entrada, "*")){
-            return $validacion = 4;
+            return $validacion = 13;
         } 
         elseif(strpos($entrada, "/")){
-            return $validacion = 5;
+            return $validacion = 14;
         } 
     }
 }
@@ -91,23 +95,26 @@ $respuesta = new calculadora;
 
 $i = $respuesta->validacion();
 switch ($i) {
-    case '1':
+    case '9':
+        echo "pepapig";
+        break;
+    case '10':
         $respuesta->mezcla();
         break;
-    case '2':
+    case '11':
         $respuesta->resta();
         break;
-    case '3':
+    case '12':
         $respuesta->suma();
         break;
-    case '4':
+    case '13':
         $respuesta->producto();
         break;
-    case '5':
+    case '14':
         $respuesta->division();
         break;
     default:
-        # code...
+        echo "error";
         break;
 }
 
