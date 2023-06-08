@@ -7,7 +7,7 @@
     <title>Calculadora</title>
 </head>
 <body>
-    <form action="api.php" method="post">
+    <form action="index.php" method="post">
         <label> Calculadora: </label><br>
         <input type="text" name="operacion">
         <input type="submit" value="=">
@@ -24,8 +24,7 @@ class calculadora{
         global $entrada;
         $datos = explode('+', $entrada);
         $suma = array_sum($datos);
-        echo $suma;
-
+        echo "Resultado: $suma";
     }
     public function resta(){
         global $entrada;
@@ -36,7 +35,7 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        echo $resta;
+        echo "Resultado: $resta";
     }
     public function mezcla2(){
         global $entrada;
@@ -45,6 +44,8 @@ class calculadora{
             return $acumulado*$valor;
         }, 1);
         $datos = explode('+', $entrada);
+
+        $datos[0] = $multiplicacion;
         $suma = array_sum($datos);
         $datos = explode('-', $entrada);
         $resta = $suma;
@@ -53,7 +54,7 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        return ;
+        echo "Resultado: $resta";
     }
 
     public function mezcla(){
@@ -67,7 +68,7 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        echo $resta;
+        echo "Resultado: $resta";
 
     }
     public function producto(){
@@ -76,7 +77,7 @@ class calculadora{
         $multiplicacion = array_reduce($datos, function($acumulado, $valor){
             return $acumulado*$valor;
         }, 1);
-        echo $multiplicacion;
+        echo "Resultado: $multiplicacion";
     }
     public function division(){
         global $entrada;
@@ -89,7 +90,7 @@ class calculadora{
                 return $acumulado/$valor;
             }, $datos_sin_0);
         }
-        echo $division;
+        echo "Resultado: $division";
     }
     public function validacion(){
         global $entrada;
@@ -119,7 +120,7 @@ $respuesta = new calculadora;
 $i = $respuesta->validacion();
 switch ($i) {
     case '9':
-        echo "pepapig";
+        $respuesta->mezcla2();
         break;
     case '10':
         $respuesta->mezcla();
