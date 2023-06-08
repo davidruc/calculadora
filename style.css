@@ -1,0 +1,30 @@
+body{
+    background-image: url(bg_bggenerator_com.png);
+    background-size: 100%;
+}
+
+.form{
+    margin: 8% 0;
+    display: flex;
+    flex-direction: column ;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuadroEntrada{
+    display: flex;
+    gap: 2%;
+    justify-content: center;
+}
+
+.cuadroEntrada .titulo{
+    font-size: 12rem;
+}
+
+.cuadroEntrada .input{
+    width: 80%;
+}
+
+.p{
+    text-align: center;
+}

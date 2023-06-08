@@ -5,12 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="index.php" method="post">
-        <label> Calculadora: </label><br>
-        <input type="text" name="operacion">
-        <input type="submit" value="=">
+    <form class="form" action="index.php" method="post">
+        <h1 class="titulo"> Calculadora: </h1>
+        <div class="cuadroEntrada">
+            <input class="input" type="text" name="operacion">
+            <input type="submit" value="=">
+        </div>
     </form>
 </body>
 </html>
@@ -24,7 +27,7 @@ class calculadora{
         global $entrada;
         $datos = explode('+', $entrada);
         $suma = array_sum($datos);
-        echo "Resultado: $suma";
+        echo "<p class='p'> Resultado: $suma </p>";
     }
     public function resta(){
         global $entrada;
@@ -35,8 +38,35 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        echo "Resultado: $resta";
+        echo "<p class='p'> Resultado: $resta </p>";
     }
+
+    public function mezcla3(){
+        global $entrada;
+        if ($entrada === "0/0"){
+            $division = "Indeterminado";
+        }else {
+            $datos = explode('/', $entrada);
+            $datos_sin_0 = array_shift($datos);
+            $division = array_reduce($datos, function($acumulado, $valor){
+                return $acumulado/$valor;
+            }, $datos_sin_0);
+        }
+        var_dump($division);
+        $datos = explode('+', $entrada);
+        $datos[0] = $division;
+        $suma = array_sum($datos);
+        $datos = explode('-', $entrada);
+        $resta = $suma;
+        foreach($datos as $key => $val){
+            if($key > 0){
+                $resta -= $val;
+            }
+        }
+        echo "<p class='p'> Resultado: $resta </p>";
+    }
+
+
     public function mezcla2(){
         global $entrada;
         $datos = explode("*", $entrada);
@@ -44,7 +74,6 @@ class calculadora{
             return $acumulado*$valor;
         }, 1);
         $datos = explode('+', $entrada);
-
         $datos[0] = $multiplicacion;
         $suma = array_sum($datos);
         $datos = explode('-', $entrada);
@@ -54,7 +83,7 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        echo "Resultado: $resta";
+        echo "<p class='p'> Resultado: $resta </p>";
     }
 
     public function mezcla(){
@@ -68,7 +97,7 @@ class calculadora{
                 $resta -= $val;
             }
         }
-        echo "Resultado: $resta";
+        echo "<p class='p'> Resultado: $resta </p>";
 
     }
     public function producto(){
@@ -77,7 +106,7 @@ class calculadora{
         $multiplicacion = array_reduce($datos, function($acumulado, $valor){
             return $acumulado*$valor;
         }, 1);
-        echo "Resultado: $multiplicacion";
+        echo "<p class='p'> Resultado: $multiplicacion </p>";
     }
     public function division(){
         global $entrada;
@@ -90,13 +119,15 @@ class calculadora{
                 return $acumulado/$valor;
             }, $datos_sin_0);
         }
-        echo "Resultado: $division";
+        echo "<p class='p'> Resultado: $division </p>";
     }
     public function validacion(){
         global $entrada;
         $validacion;
         if(strpos($entrada, "+") && strpos($entrada, "-") && strpos($entrada, "*")){
             return $validacion = 9;
+        } else if(strpos($entrada, "+") && strpos($entrada, "-") && strpos($entrada, "/")){
+            return $validacion = 8;
         }
         elseif(strpos($entrada, "+") && strpos($entrada, "-")){
             return $validacion = 10;
@@ -116,9 +147,13 @@ class calculadora{
     }
 }
 $respuesta = new calculadora;
+//!Mirar la posibilidad de no hacer esto si no de simplemente poner unos condicionales en cascada donde se retornen los valores
 
 $i = $respuesta->validacion();
 switch ($i) {
+    case '8':
+        $respuesta->mezcla3();
+        break;
     case '9':
         $respuesta->mezcla2();
         break;
