@@ -61,11 +61,15 @@ class calculadora{
     }
     public function division(){
         global $entrada;
-        $datos = explode('/', $entrada);
-        $datos_sin_0 = array_shift($datos);
-        $division = array_reduce($datos, function($acumulado, $valor){
-            return $acumulado/$valor;
-        }, $datos_sin_0);
+        if ($entrada === "0/0"){
+            $division = "Indeterminado";
+        }else {
+            $datos = explode('/', $entrada);
+            $datos_sin_0 = array_shift($datos);
+            $division = array_reduce($datos, function($acumulado, $valor){
+                return $acumulado/$valor;
+            }, $datos_sin_0);
+        }
         echo $division;
     }
     public function validacion(){
@@ -101,10 +105,10 @@ switch ($i) {
     case '10':
         $respuesta->mezcla();
         break;
-    case '11':
+    case '12':
         $respuesta->resta();
         break;
-    case '12':
+    case '11':
         $respuesta->suma();
         break;
     case '13':
@@ -117,12 +121,4 @@ switch ($i) {
         echo "error";
         break;
 }
-
-
-
-
-
-
-
-
 ?>
