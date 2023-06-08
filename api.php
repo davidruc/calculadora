@@ -8,6 +8,7 @@
 </head>
 <body>
     <form action="api.php" method="post">
+        <label> Calculadora: </label><br>
         <input type="text" name="operacion">
         <input type="submit" value="=">
     </form>
@@ -37,6 +38,24 @@ class calculadora{
         }
         echo $resta;
     }
+    public function mezcla2(){
+        global $entrada;
+        $datos = explode("*", $entrada);
+        $multiplicacion = array_reduce($datos, function($acumulado, $valor){
+            return $acumulado*$valor;
+        }, 1);
+        $datos = explode('+', $entrada);
+        $suma = array_sum($datos);
+        $datos = explode('-', $entrada);
+        $resta = $suma;
+        foreach($datos as $key => $val){
+            if($key > 0){
+                $resta -= $val;
+            }
+        }
+        return ;
+    }
+
     public function mezcla(){
         global $entrada;
         $datos = explode('+', $entrada);
